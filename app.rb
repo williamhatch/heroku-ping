@@ -5,6 +5,8 @@ require 'net/http'
 require 'net/https'
 require 'clockwork'
 require 'logger'
+require 'active_support/all'
+require './mail'
 
 ## -----------------------------------------------------------------------------
 ## -- Init ---------------------------------------------------------------------
@@ -25,7 +27,9 @@ ENV['PING_VERIFY_SSL'] = '0' if ENV['PING_VERIFY_SSL'].nil?
 ## -- Handlers -----------------------------------------------------------------
 
 def ping_sites
-  ENV['PING_URL'].split(',').each { | url | ping(url) }
+  ENV['PING_URL'].split(',').each { | url | 
+    #LOG.info "--------- #{url} -----------"
+    ping(url) }
 end
 
 def ping(url)
@@ -58,6 +62,9 @@ def request(uri, type=:head)
 rescue StandardError => e
  LOG.error "Encountered (#{e.class.name}) exception"
  LOG.error "Exception message: (#{e.message})"
+ LOG.info "send mail to william@hatch.nz with #{uri}"
+ mail2 "william@hatch.nz" ,"#{uri}"
+
 
  nil
 end
@@ -82,6 +89,8 @@ def send_request(http, type, url_path)
   end
 end
 
+=begin
+
 ## -----------------------------------------------------------------------------
 ## -- Boilerplate --------------------------------------------------------------
 
@@ -95,4 +104,13 @@ module Clockwork
   every ENV['PING_INTERVAL'].to_i.seconds, 'ping.act'
   LOG.info \
     "Now pinging #{ENV['PING_URL']} every #{ENV['PING_INTERVAL']} seconds..."
+end
+
+=end
+
+
+10.times do 
+  ping_sites
+  LOG.info "Now pinging #{ENV['PING_URL']} every #{ENV['PING_INTERVAL']} seconds..."
+  sleep(10)
 end

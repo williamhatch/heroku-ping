@@ -5,6 +5,20 @@ GEM
       tzinfo
     foreman (0.85.0)
       thor (~> 0.19.1)
+    gmail (0.6.0)
+      gmail_xoauth (>= 0.3.0)
+      mail (>= 2.2.1)
+    gmail_xoauth (0.4.2)
+      oauth (>= 0.3.6)
+    mail (2.7.0)
+      mini_mime (>= 0.1.1)
+    mailfactory (1.4.0)
+      mime-types (>= 1.13.1)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
+    mini_mime (1.0.0)
+    oauth (0.5.4)
     thor (0.19.4)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
@@ -16,6 +30,8 @@ PLATFORMS
 DEPENDENCIES
   clockwork
   foreman
+  gmail
+  mailfactory
   tzinfo
 
 BUNDLED WITH
